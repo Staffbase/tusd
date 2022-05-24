@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/Staffbase/tusd/v2/cmd/tusd/cli/hooks"
 	"github.com/hashicorp/go-hclog"
 	"github.com/hashicorp/go-plugin"
-	"github.com/tus/tusd/cmd/tusd/cli/hooks"
 )
 
 // Here is the implementation of our hook handler

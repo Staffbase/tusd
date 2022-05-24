@@ -83,10 +83,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/Staffbase/tusd/v2/internal/semaphore"
+	"github.com/Staffbase/tusd/v2/internal/uid"
+	"github.com/Staffbase/tusd/v2/pkg/handler"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/tus/tusd/internal/semaphore"
-	"github.com/tus/tusd/internal/uid"
-	"github.com/tus/tusd/pkg/handler"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"

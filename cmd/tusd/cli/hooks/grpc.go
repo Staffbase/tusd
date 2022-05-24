@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
+	pb "github.com/Staffbase/tusd/v2/pkg/proto/v2"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
-	pb "github.com/tus/tusd/pkg/proto/v2"
 	"google.golang.org/grpc"
 )
 

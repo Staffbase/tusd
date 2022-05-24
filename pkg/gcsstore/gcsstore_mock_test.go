@@ -6,8 +6,8 @@ package gcsstore_test
 
 import (
 	context "context"
+	gcsstore "github.com/Staffbase/tusd/v2/pkg/gcsstore"
 	gomock "github.com/golang/mock/gomock"
-	gcsstore "github.com/tus/tusd/pkg/gcsstore"
 	io "io"
 	reflect "reflect"
 )

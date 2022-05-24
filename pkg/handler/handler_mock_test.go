@@ -6,8 +6,8 @@ package handler_test
 
 import (
 	context "context"
+	handler "github.com/Staffbase/tusd/v2/pkg/handler"
 	gomock "github.com/golang/mock/gomock"
-	handler "github.com/tus/tusd/pkg/handler"
 	io "io"
 	reflect "reflect"
 )

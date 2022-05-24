@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
+	. "github.com/Staffbase/tusd/v2/pkg/handler"
 	"github.com/golang/mock/gomock"
-	. "github.com/tus/tusd/pkg/handler"
 )
 
 type closingStringReader struct {
