@@ -128,7 +128,7 @@ func NewAzureService(config *AzConfig) (AzService, error) {
 }
 
 // Determine if we return a InfoBlob or BlockBlob, based on the name
-func (service *azService) NewBlob(ctx context.Context, name string) (AzBlob, error) {
+func (service *azService) NewBlob(_ context.Context, name string) (AzBlob, error) {
 	var fileBlob AzBlob
 	bb := service.ContainerURL.NewBlockBlobURL(name)
 	if strings.HasSuffix(name, InfoBlobSuffix) {
@@ -230,7 +230,7 @@ func (blockBlob *BlockBlob) Commit(ctx context.Context) error {
 		base64BlockIDs[index] = blockIDIntToBase64(id)
 	}
 
-	_, err := blockBlob.Blob.CommitBlockList(ctx, base64BlockIDs, azblob.BlobHTTPHeaders{}, azblob.Metadata{}, azblob.BlobAccessConditions{}, blockBlob.AccessTier, nil, azblob.ClientProvidedKeyOptions{})
+	_, err := blockBlob.Blob.CommitBlockList(ctx, base64BlockIDs, azblob.BlobHTTPHeaders{}, azblob.Metadata{}, azblob.BlobAccessConditions{}, blockBlob.AccessTier, nil, azblob.ClientProvidedKeyOptions{}, azblob.ImmutabilityPolicyOptions{})
 	return err
 }
 
@@ -244,7 +244,7 @@ func (infoBlob *InfoBlob) Delete(ctx context.Context) error {
 // Because the info file is presumed to be smaller than azblob.BlockBlobMaxUploadBlobBytes (256MiB), we can upload it all in one go
 // New uploaded data will create a new, or overwrite the existing block blob
 func (infoBlob *InfoBlob) Upload(ctx context.Context, body io.ReadSeeker) error {
-	_, err := infoBlob.Blob.Upload(ctx, body, azblob.BlobHTTPHeaders{}, azblob.Metadata{}, azblob.BlobAccessConditions{}, azblob.DefaultAccessTier, nil, azblob.ClientProvidedKeyOptions{})
+	_, err := infoBlob.Blob.Upload(ctx, body, azblob.BlobHTTPHeaders{}, azblob.Metadata{}, azblob.BlobAccessConditions{}, azblob.DefaultAccessTier, nil, azblob.ClientProvidedKeyOptions{}, azblob.ImmutabilityPolicyOptions{})
 	return err
 }
 
@@ -267,12 +267,12 @@ func (infoBlob *InfoBlob) Download(ctx context.Context) (io.ReadCloser, error) {
 }
 
 // infoBlob does not utilise offset, so just return 0, nil
-func (infoBlob *InfoBlob) GetOffset(ctx context.Context) (int64, error) {
+func (infoBlob *InfoBlob) GetOffset(_ context.Context) (int64, error) {
 	return 0, nil
 }
 
 // infoBlob does not have uncommited blocks, so just return nil
-func (infoBlob *InfoBlob) Commit(ctx context.Context) error {
+func (infoBlob *InfoBlob) Commit(_ context.Context) error {
 	return nil
 }
 
@@ -284,8 +284,8 @@ func blockIDBinaryToBase64(blockID []byte) string {
 }
 
 func blockIDBase64ToBinary(blockID string) []byte {
-	binary, _ := base64.StdEncoding.DecodeString(blockID)
-	return binary
+	bin, _ := base64.StdEncoding.DecodeString(blockID)
+	return bin
 }
 
 // These helper functions convert an int block ID to a base-64 string and vice versa
